@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/mondefijava2_db</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+		<property name="current_session_context_class">thread</property>
+		<property name="hibernate.connection.autocommit">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.charSet">UTF-8</property>
+
+		<mapping class="fr.doranco.entity.Adresse"></mapping>
+		<mapping class="fr.doranco.entity.User"></mapping>
+		<mapping class="fr.doranco.entity.LigneDeCommande"></mapping>
+		<mapping class="fr.doranco.entity.Commentaire"></mapping>
+		<mapping class="fr.doranco.entity.Commande"></mapping>
+		<mapping class="fr.doranco.entity.Categorie"></mapping>
+		<mapping class="fr.doranco.entity.CartePaiement"></mapping>
+		<mapping class="fr.doranco.entity.ArticlePanier"></mapping>
+		<mapping class="fr.doranco.entity.Article"></mapping>
+
+
+	</session-factory>
+</hibernate-configuration>
