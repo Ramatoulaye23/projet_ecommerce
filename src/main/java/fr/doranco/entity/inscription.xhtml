@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>un formulaire d'inscription JSF</title>
+	<h:outputStylesheet name="common-style.css" library="css" />
+	<h:outputStylesheet name="table-style.css" library="css" />
+</h:head>
+<h:body>
+	<ui:composition template="/resources/template/layout.xhtml">
+		<ui:define name="content">
+
+			<f:view>
+				<h:form>
+					<h4>
+						Formulaire JSF d'inscription à l' <a
+							href="https://www.doranco.fr/candidature/parcours/41?">Ecole
+							DORANCO</a>
+					</h4>
+					<p></p>
+					<h3>Infos utilisateur :</h3>
+					<h:panelGrid id="panelUser" columns="3" cellpadding="4"
+						cellspacing="1">
+
+						<h:outputLabel value="Genre : " />
+						<h:selectOneRadio value="#{userbean.genre}" required="true"
+							requiredMessage="le sexe est obligatoire !" id="genre">
+							<f:selectItem itemLabel="Homme" itemValue="Homme" />
+							<f:selectItem itemLabel="Femme" itemValue="Femme" />
+						</h:selectOneRadio>
+						<h:message for="genre" style="color:red" />
+
+						<h:outputLabel value="Nom :" />
+						<h:inputText value="#{userbean.nom}" required="true"
+							requiredMessage="le nom est obligatoire !" id="nom" />
+						<h:message for="nom" style="color:red" />
+
+						<h:outputLabel value="Prenom :" />
+						<h:inputText value="#{userbean.prenom}" required="true"
+							requiredMessage="le prenom est obligatoire !" id="prenom" />
+						<h:message for="prenom" style="color:red" />
+
+						<h:outputLabel value="Date de naissance :" />
+						<h:inputText value="#{userbean.dateNaissance}" required="true"
+							requiredMessage="la date de naissance est obligatoire !"
+							id="datenaissance" a:placeholder="dd/mm/yyyy">
+							<f:convertDateTime pattern="dd/MM/yyyy" for="datenaissance"></f:convertDateTime>
+						</h:inputText>
+						<h:message for="datenaissance" style="color:red" />
+
+						<h:outputLabel value="Email :" />
+						<h:inputText value="#{userbean.email}" required="true"
+							requiredMessage="l email est obligatoire !" id="email" />
+						<h:message for="email" style="color:red" />
+
+						<h:outputLabel value="Mot de passe :" />
+						<h:inputSecret value="#{userbean.motDePasse}" required="true"
+							requiredMessage="le mot de passe est obligatoire !"
+							id="motdepasse" />
+						<h:message for="motdepasse" style="color:red" />
+
+						<h:outputLabel value="Mot de passe confirmation :" />
+						<h:inputSecret value="#{userbean.motDePasseConfirmation}"
+							required="true"
+							requiredMessage="la confirmation du mot de passe est obligatoire !"
+							id="motdepasseconfirmation" />
+						<h:message for="motdepasseconfirmation" style="color:red" />
+
+						<h:outputText value=""></h:outputText>
+						<h:commandButton value="Inscription"
+							action="#{userbean.addUser()}" />
+						<p>
+							<h:outputLabel value="#{userbean.messageSuccess}"
+								style="color:green" />
+							<h:outputLabel value="#{userbean.messageError}" style="color:red" />
+						</p>
+
+					</h:panelGrid>
+				</h:form>
+				<p></p>
+
+				<h3>Adresse :</h3>
+				<h:form>
+					<h:panelGrid id="panelAdresse" columns="3" cellpadding="4"
+						cellspacing="1">
+
+						<h:outputLabel value="Numéro :" />
+						<h:inputText value="#{userbean.numero}" id="numero"
+							required="true" requiredMessage="Le numéro est obligatoire !" />
+						<h:message for="numero" style="color:red" />
+
+						<h:outputLabel value="Rue :" />
+						<h:inputText value="#{userbean.rue}" id="rue" required="true"
+							requiredMessage="La rue est obligatoire !" />
+						<h:message for="rue" style="color:red" />
+
+						<h:outputLabel value="code postale :" />
+						<h:inputText value="#{userbean.codePostal}" id="codePostal"
+							required="true"
+							requiredMessage="Le code postal est obligatoire !" />
+						<h:message for="codePostal" style="color:red" />
+
+						<h:outputLabel value="ville :" />
+						<h:inputText value="#{userbean.ville}" id="ville" required="true"
+							requiredMessage="La ville postal est obligatoire !" />
+						<h:message for="ville" style="color:red" />
+
+						<h:outputText value=""></h:outputText>
+						<h:commandButton value="Ajouter" action="#{userbean.addAdresse()}" />
+					</h:panelGrid>
+
+				</h:form>
+				<h:form>
+				<h:panelGrid id="panelAdresse" columns="3" cellpadding="4" cellspacing="1">
+					<ui:repeat var="a" value="#{userbean.getAdressesTemp()}">
+						<li>#{a.numero} #{a.rue} #{a.ville} #{a.codePostal}</li>
+					</ui:repeat>
+				</h:panelGrid>
+				</h:form>
+				<p></p>
+				<h3>Listes des participants inscrits</h3>
+				<h:form>
+					<h:dataTable value="#{userbean.getUsers()}" var="u"
+						styleClass="order-table" headerClass="order-table-header"
+						rowClasses="order-table-odd-row,order-table-even-row">
+
+						<h:column>
+							<f:facet name="header">Prénom</f:facet>
+							<h:outputText value="#{u.prenom}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Nom</f:facet>
+							<h:outputText value="#{u.nom}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Email</f:facet>
+							<h:outputText value="#{u.email}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Date de Naissance</f:facet>
+							<h:outputText
+								value="#{userbean.convertDateToString(u.dateNaissance)}">
+
+							</h:outputText>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Adresse(s)</f:facet>
+							<ui:repeat value="#{u.getAdresses()}" var="a">
+								<h:outputText
+									value="#{a.numero} #{a.rue} #{a.ville} #{a.codePostal}" />
+								<br></br>
+							</ui:repeat>
+						</h:column>
+					</h:dataTable>
+
+				</h:form>
+			</f:view>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
